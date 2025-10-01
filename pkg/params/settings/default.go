@@ -13,6 +13,10 @@ func getHubCatalogs(logger *zap.SugaredLogger, catalogs *sync.Map, config map[st
 	if catalogs == nil {
 		catalogs = &sync.Map{}
 	}
+	// if hubName, ok := config[HubCatalogNameKey]; ok && hubName == "tekton" {
+	// 	config[HubCatalogNameKey] = ""
+	// }
+
 	if hubURL, ok := config[HubURLKey]; !ok || hubURL == "" {
 		config[HubURLKey] = ArtifactHubURLDefaultValue
 		logger.Infof("CONFIG: using default hub url %s", ArtifactHubURLDefaultValue)
@@ -26,9 +30,9 @@ func getHubCatalogs(logger *zap.SugaredLogger, catalogs *sync.Map, config map[st
 	}
 	hc := HubCatalog{
 		Index: "default",
-		Name:  config[HubCatalogNameKey],
-		URL:   config[HubURLKey],
-		Type:  config[HubCatalogTypeKey],
+		// Name:  config[HubCatalogNameKey],
+		URL:  config[HubURLKey],
+		Type: config[HubCatalogTypeKey],
 	}
 	catalogs.Store("default", hc)
 
@@ -43,9 +47,9 @@ func getHubCatalogs(logger *zap.SugaredLogger, catalogs *sync.Map, config map[st
 	if !exists {
 		catalogs.Store(hubtypes.TektonHubType, HubCatalog{
 			Index: hubtypes.TektonHubType,
-			Name:  TektonHubCatalogNameDefaultValue,
-			URL:   TektonHubURLDefaultValue,
-			Type:  hubtypes.TektonHubType,
+			// Name:  TektonHubCatalogNameDefaultValue,
+			URL:  TektonHubURLDefaultValue,
+			Type: hubtypes.TektonHubType,
 		})
 	}
 
